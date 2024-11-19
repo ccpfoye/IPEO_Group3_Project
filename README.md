@@ -5,6 +5,16 @@ The Final Project for IPEO 2024, Group 3.
 
 Download the data from [here](https://enacshare.epfl.ch/bY2wS5TcA4CefGks7NtXg) and place it in the `/data` directory.
 
+Your repo should look like:
+```
+|- data/
+  |- classification_dataset/
+    |- train/
+    |- test/
+    |- validation/
+    |- README.md
+  ```
+
 Here is the overview from the project overview:
 
 ### Marine Debris Detection
