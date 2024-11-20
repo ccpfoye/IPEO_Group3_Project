@@ -11,6 +11,7 @@ Here is the overview from the project overview:
 
 #### Task 
 Ocean plastic pollution is a threat for marine and coastal ecosystems and a major societal and environmental concern. Being able to monitor it with a timely detection is of big importance to coordinate cleaning efforts. Floating marine debris tends to create filaments referred to as windrows, generally used as proxies for plastic pollution. They can reach more than 50m of width and 500m of length, making them visible from optical satellite sensors such as Sentinel-2, having a resolution of 10 to 20m. The goal of the project is to develop an classifier that identifies the presence of floating marine debris in Sentinel-2 images.
+
 #### Data 
 Students will use a dataset composed of 12-bands Sentinel-2 image patches of size 32×32 pixels. Each image is associated with a binary label: ”0” for negative labels (absence of floating debris), ”1” for positive labels (presence of floating debris). The dataset is composed of 53535 training patches, 7436 validation patches and 13386 test patches. The samples for the validation and test set have been sampled to contain an equal number of positive and negative examples.
 
@@ -26,3 +27,22 @@ to be taken into account for an effective training of the model.
 • The dataset is obtained from a segmentation dataset with per-pixel annotations, such that if at least
 one positive pixel is present in the image, the image class is set to ”1”. Thus, for some images, it
 can be challenging to correctly classify them as only few pixels contain floating material.
+
+
+
+## Sentinel-2 Bands (which our data follows)
+| Band  | Resolution | Central Wavelength | Description                       |
+|-------|------------|---------------------|-----------------------------------|
+| B1    | 60 m       | 443 nm             | Ultra Blue (Coastal and Aerosol) |
+| B2    | 10 m       | 490 nm             | Blue                              |
+| B3    | 10 m       | 560 nm             | Green                             |
+| B4    | 10 m       | 665 nm             | Red                               |
+| B5    | 20 m       | 705 nm             | Visible and Near Infrared (VNIR) |
+| B6    | 20 m       | 740 nm             | Visible and Near Infrared (VNIR) |
+| B7    | 20 m       | 783 nm             | Visible and Near Infrared (VNIR) |
+| B8    | 10 m       | 842 nm             | Visible and Near Infrared (VNIR) |
+| B8a   | 20 m       | 865 nm             | Visible and Near Infrared (VNIR) |
+| B9    | 60 m       | 940 nm             | Short Wave Infrared (SWIR)       |
+| B10   | 60 m       | 1375 nm            | Short Wave Infrared (SWIR)       |
+| B11   | 20 m       | 1610 nm            | Short Wave Infrared (SWIR)       |
+| B12   | 20 m       | 2190 nm            | Short Wave Infrared (SWIR)       |
