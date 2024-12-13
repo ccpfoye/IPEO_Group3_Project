@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 # Filter only RGB + NIR bands
 def filter_rgb_nir(images):
     return images[:, :, :, [3, 2, 1, 7]]  # Bands: Red (4), Green (3), Blue (2), NIR (8)
