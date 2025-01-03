@@ -1,4 +1,4 @@
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, f1_score
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -21,6 +21,14 @@ def confusion_matrix_plot(model,validation_dataset):
     plt.xlabel('Predicted Label')
     plt.ylabel('True Label')
     plt.show()
+
+def calculate_f1_score(model,validation_dataset):
+    y_true = np.concatenate([y for x, y in validation_dataset], axis=0)  
+    y_pred = np.argmax(model.predict(validation_dataset), axis=1)       
+
+    f1 = f1_score(y_true, y_pred)
+
+    return f1
 
 
 def plot_results(history,epochs):
