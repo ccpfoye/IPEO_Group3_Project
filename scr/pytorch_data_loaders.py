@@ -3,19 +3,49 @@ import numpy as np
 import pickle
 import torch
 from torch.utils.data import Dataset, DataLoader
+from concurrent.futures import ThreadPoolExecutor
+
+# def load_data_from_directory(directory):
+#     images = []
+#     labels = []
+
+#     for filename in os.listdir(directory):
+#         with open(os.path.join(directory, filename), 'rb') as f:
+#             image, label = pickle.load(f)
+#             # Reshape or reorder the image data if necessary
+#             # e.g., (bands, height, width) -> (height, width, bands)
+#             # image = np.transpose(image, (1, 2, 0))
+#             images.append(image)
+#             labels.append(label)
+
+#     return np.array(images), np.array(labels)
+
+
+
+def process_file(file_path):
+    with open(file_path, 'rb') as f:
+        image, label = pickle.load(f)
+        # Reshape or reorder the image data if necessary
+        # e.g., (bands, height, width) -> (height, width, bands)
+        # image = np.transpose(image, (1, 2, 0))
+    return image, label
 
 def load_data_from_directory(directory):
     images = []
     labels = []
 
-    for filename in os.listdir(directory):
-        with open(os.path.join(directory, filename), 'rb') as f:
-            image, label = pickle.load(f)
-            # Reshape or reorder the image data if necessary
-            # e.g., (bands, height, width) -> (height, width, bands)
-            image = np.transpose(image, (1, 2, 0))
-            images.append(image)
-            labels.append(label)
+    # Use os.scandir() for efficient directory traversal
+    with os.scandir(directory) as entries:
+        file_paths = [entry.path for entry in entries if entry.is_file()]
+
+    # Use ThreadPoolExecutor for parallel processing
+    with ThreadPoolExecutor() as executor:
+        results = list(executor.map(process_file, file_paths))
+
+    # Unpack results
+    for image, label in results:
+        images.append(image)
+        labels.append(label)
 
     return np.array(images), np.array(labels)
 
@@ -51,7 +81,7 @@ class ImageDataset(Dataset):
         img = img.astype(np.float32)
 
         # Reorder to (C, H, W) for PyTorch Tensors
-        img = np.transpose(img, (2, 0, 1))  # (H, W, C) -> (C, H, W)
+        # img = np.transpose(img, (2, 0, 1))  # (H, W, C) -> (C, H, W)
 
         # Convert to torch Tensor
         img_tensor = torch.from_numpy(img)
