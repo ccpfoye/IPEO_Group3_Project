@@ -31,7 +31,9 @@ def _select_bands(arr: np.ndarray, bands=None) -> np.ndarray:
     return arr
 
 
-def spearman_rank_correlation_abs(arr1: np.ndarray, arr2: np.ndarray, bands=None) -> float:
+def spearman_rank_correlation_abs(
+    arr1: np.ndarray, arr2: np.ndarray, bands=None
+) -> float:
     """
     Computes the Spearman rank correlation between two arrays,
     but uses the absolute values of each array before ranking.
@@ -63,10 +65,12 @@ def spearman_rank_correlation_abs(arr1: np.ndarray, arr2: np.ndarray, bands=None
     return correlation
 
 
-def spearman_rank_correlation_noabs(arr1: np.ndarray, arr2: np.ndarray, bands=None) -> float:
+def spearman_rank_correlation_noabs(
+    arr1: np.ndarray, arr2: np.ndarray, bands=None
+) -> float:
     """
     Computes the Spearman rank correlation between two arrays (no absolute value).
-    
+
     Parameters:
     -----------
     arr1, arr2 : np.ndarray
@@ -93,14 +97,11 @@ def spearman_rank_correlation_noabs(arr1: np.ndarray, arr2: np.ndarray, bands=No
 
 
 def structural_similarity_index(
-    arr1: np.ndarray,
-    arr2: np.ndarray,
-    bands=None,
-    win_size=None
+    arr1: np.ndarray, arr2: np.ndarray, bands=None, win_size=None
 ) -> float:
     """
     Computes the Structural Similarity Index (SSIM) between two images/arrays.
-    Uses skimage.metrics.structural_similarity with channel_axis instead of 
+    Uses skimage.metrics.structural_similarity with channel_axis instead of
     multichannel=True for 3D data (scikit-image >= 0.19).
 
     Parameters:
@@ -111,9 +112,9 @@ def structural_similarity_index(
         Indices of the channels/bands to select. If None, all are used.
     win_size : int or None
         Optional. The size of the Gaussian weighting window (must be odd). If None,
-        skimage's default is used (typically 7 or 11). If you get a ValueError 
+        skimage's default is used (typically 7 or 11). If you get a ValueError
         about 'win_size exceeds image extent', pass a smaller odd value (e.g., 3 or 5).
-    
+
     Returns:
     --------
     float
@@ -133,20 +134,20 @@ def structural_similarity_index(
         arr2_sel,
         data_range=arr2_sel.max() - arr2_sel.min(),
         channel_axis=channel_axis,
-        win_size=win_size
+        win_size=win_size,
     )
     return ssim_value
 
 
 def pearson_correlation_hog(arr1: np.ndarray, arr2: np.ndarray, bands=None) -> float:
     """
-    Computes the Pearson Correlation between the HOG (Histogram of Oriented Gradients) 
+    Computes the Pearson Correlation between the HOG (Histogram of Oriented Gradients)
     features of two images/arrays.
 
     Parameters:
     -----------
     arr1, arr2 : np.ndarray
-        Input images to compare. Must be the same shape after band selection, 
+        Input images to compare. Must be the same shape after band selection,
         or at least valid for HOG extraction.
     bands : list or None
         Indices of the channels/bands to select. If None, all are used.
@@ -171,7 +172,7 @@ def pearson_correlation_hog(arr1: np.ndarray, arr2: np.ndarray, bands=None) -> f
         pixels_per_cell=(8, 8),
         cells_per_block=(2, 2),
         visualize=False,
-        channel_axis=channel_axis
+        channel_axis=channel_axis,
     )
 
     hog2 = hog(
@@ -180,7 +181,7 @@ def pearson_correlation_hog(arr1: np.ndarray, arr2: np.ndarray, bands=None) -> f
         pixels_per_cell=(8, 8),
         cells_per_block=(2, 2),
         visualize=False,
-        channel_axis=channel_axis
+        channel_axis=channel_axis,
     )
 
     corr_coeff, _ = pearsonr(hog1, hog2)
@@ -204,16 +205,22 @@ if __name__ == "__main__":
     img4 = np.random.random((64, 64, 5))
     selected_bands = [0, 1, 2]  # We'll only compare these three channels
 
-    print("\nSpearman (abs) multi-band, first 3 channels:",
-          spearman_rank_correlation_abs(img3, img4, bands=selected_bands))
-    print("Spearman (no abs) multi-band, first 3 channels:",
-          spearman_rank_correlation_noabs(img3, img4, bands=selected_bands))
-    
+    print(
+        "\nSpearman (abs) multi-band, first 3 channels:",
+        spearman_rank_correlation_abs(img3, img4, bands=selected_bands),
+    )
+    print(
+        "Spearman (no abs) multi-band, first 3 channels:",
+        spearman_rank_correlation_noabs(img3, img4, bands=selected_bands),
+    )
+
     # If you see the 'win_size exceeds image extent' error, pass a smaller win_size:
-    print("SSIM multi-band, first 3 channels:",
-          structural_similarity_index(img3, img4, bands=selected_bands, win_size=7))
+    print(
+        "SSIM multi-band, first 3 channels:",
+        structural_similarity_index(img3, img4, bands=selected_bands, win_size=7),
+    )
 
-    print("HOG Pearson multi-band, first 3 channels:",
-          pearson_correlation_hog(img3, img4, bands=selected_bands))
-
-
+    print(
+        "HOG Pearson multi-band, first 3 channels:",
+        pearson_correlation_hog(img3, img4, bands=selected_bands),
+    )

@@ -5,32 +5,36 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from concurrent.futures import ThreadPoolExecutor
 
-# def load_data_from_directory(directory):
-#     images = []
-#     labels = []
 
-#     for filename in os.listdir(directory):
-#         with open(os.path.join(directory, filename), 'rb') as f:
-#             image, label = pickle.load(f)
-#             # Reshape or reorder the image data if necessary
-#             # e.g., (bands, height, width) -> (height, width, bands)
-#             # image = np.transpose(image, (1, 2, 0))
-#             images.append(image)
-#             labels.append(label)
-
-#     return np.array(images), np.array(labels)
-
-
-
-def process_file(file_path):
-    with open(file_path, 'rb') as f:
+def process_file(file_path: str) -> tuple:
+    """
+    Processes a file containing image and label data.
+    -----
+    The function expects the file to be in a binary format that can be loaded
+    using `pickle.load`.
+    """
+    with open(file_path, "rb") as f:
         image, label = pickle.load(f)
-        # Reshape or reorder the image data if necessary
-        # e.g., (bands, height, width) -> (height, width, bands)
-        # image = np.transpose(image, (1, 2, 0))
     return image, label
 
-def load_data_from_directory(directory):
+
+def load_data_from_directory(directory: str):
+    """
+    Load images and labels from a specified directory.
+    This function scans the given directory for files, processes each file in parallel,
+    and returns the images and labels as numpy arrays.
+    Parameters
+    ----------
+    directory : str
+        The path to the directory containing the image files.
+    Returns
+    -------
+    images : np.ndarray
+        An array of images loaded from the directory.
+    labels : np.ndarray
+        An array of labels corresponding to the images.
+    """
+
     images = []
     labels = []
 
@@ -49,7 +53,18 @@ def load_data_from_directory(directory):
 
     return np.array(images), np.array(labels)
 
+
 class ImageDataset(Dataset):
+    """A custom Dataset class for loading image data and labels for PyTorch models.
+    The dataset handles multi-band images stored as NumPy arrays and their corresponding labels.
+    It supports optional transformations and band selection.
+    Attributes:
+        images (np.ndarray): Array of images with shape (N, H, W, C).
+        labels (np.ndarray): Array of labels with shape (N,).
+        transform (callable, optional): Optional transform to be applied on images.
+        selected_bands (list, optional): Indices of bands to select from images.
+    """
+
     def __init__(self, images, labels, transform=None, selected_bands=None):
         """
         images: NumPy array of shape (N, H, W, C)
