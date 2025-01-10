@@ -40,19 +40,18 @@ can be challenging to correctly classify them as only few pixels contain floatin
 
 
 
-## Sentinel-2 Bands (which our data follows)
-| Band  | Resolution | Central Wavelength | Description                       |
-|-------|------------|---------------------|-----------------------------------|
-| B1    | 60 m       | 443 nm             | Ultra Blue (Coastal and Aerosol) |
-| B2    | 10 m       | 490 nm             | Blue                              |
-| B3    | 10 m       | 560 nm             | Green                             |
-| B4    | 10 m       | 665 nm             | Red                               |
-| B5    | 20 m       | 705 nm             | Visible and Near Infrared (VNIR) |
-| B6    | 20 m       | 740 nm             | Visible and Near Infrared (VNIR) |
-| B7    | 20 m       | 783 nm             | Visible and Near Infrared (VNIR) |
-| B8    | 10 m       | 842 nm             | Visible and Near Infrared (VNIR) |
-| B8a   | 20 m       | 865 nm             | Visible and Near Infrared (VNIR) |
-| B9    | 60 m       | 940 nm             | Short Wave Infrared (SWIR)       |
-| B10   | 60 m       | 1375 nm            | Short Wave Infrared (SWIR)       |
-| B11   | 20 m       | 1610 nm            | Short Wave Infrared (SWIR)       |
-| B12   | 20 m       | 2190 nm            | Short Wave Infrared (SWIR)       |
+Sentinel-2 bands	Sentinel-2A	Sentinel-2B	
+Central wavelength (nm)	Bandwidth (nm)	Central wavelength (nm)	Bandwidth (nm)	Spatial resolution (m)
+Band 1 – Coastal aerosol	442.7	21	442.2	21	60
+Band 2 – Blue	492.4	66	492.1	66	10
+Band 3 – Green	559.8	36	559.0	36	10
+Band 4 – Red	664.6	31	664.9	31	10
+Band 5 – Vegetation red edge	704.1	15	703.8	16	20
+Band 6 – Vegetation red edge	740.5	15	739.1	15	20
+Band 7 – Vegetation red edge	782.8	20	779.7	20	20
+Band 8 – NIR	832.8	106	832.9	106	10
+Band 8A – Narrow NIR	864.7	21	864.0	22	20
+Band 9 – Water vapour	945.1	20	943.2	21	60
+Band 10 – SWIR – Cirrus	1373.5	31	1376.9	30	60
+Band 11 – SWIR	1613.7	91	1610.4	94	20
+Band 12 – SWIR	2202.4	175	2185.7	185	20

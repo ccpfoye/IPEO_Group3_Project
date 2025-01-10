@@ -1,2 +1,4 @@
 *.pkl
 *.tiff
+*.npz
+*.pyc
