@@ -90,7 +90,7 @@ class ImageDataset(Dataset):
         if self.selected_bands is not None:
             # Make sure the selected bands are within the range of channels
             # For example, if self.images.shape[3] == 5, valid bands are [0..4]
-            img = img[..., self.selected_bands]
+            img = img[self.selected_bands, ...]
 
         # Convert to float32 for PyTorch
         img = img.astype(np.float32)

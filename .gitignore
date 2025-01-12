@@ -1,4 +1,4 @@
-*.pkl
+data/classification_dataset/*/*.pkl
 *.tiff
 *.npz
 *.pyc
